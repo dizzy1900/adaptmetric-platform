@@ -73,7 +73,7 @@ export const ResultsCard = ({ visible, isLoading, avoidedLoss, riskReduction, mo
   }
 
   return (
-    <Card className="glass-panel border-safe/30 animate-slide-up overflow-hidden">
+    <Card className="glass-panel border-safe/30 animate-slide-up">
       <div className="absolute inset-0 bg-gradient-to-br from-safe/5 to-transparent pointer-events-none" />
       
       <CardHeader className="pb-2 relative">
