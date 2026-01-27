@@ -1,18 +1,75 @@
 import { TrendingUp, TrendingDown, Shield, AlertTriangle, BarChart3 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface ResultsCardProps {
   visible: boolean;
+  isLoading?: boolean;
   avoidedLoss: number;
   riskReduction: number;
   monthlyData: { month: string; value: number }[];
 }
 
-export const ResultsCard = ({ visible, avoidedLoss, riskReduction, monthlyData }: ResultsCardProps) => {
-  if (!visible) return null;
+export const ResultsCard = ({ visible, isLoading, avoidedLoss, riskReduction, monthlyData }: ResultsCardProps) => {
+  if (!visible && !isLoading) return null;
 
   const maxValue = Math.max(...monthlyData.map(d => d.value));
   const isPositive = riskReduction > 0;
+
+  // Skeleton loading state
+  if (isLoading) {
+    return (
+      <Card className="glass-panel border-safe/30 animate-slide-up overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-safe/5 to-transparent pointer-events-none" />
+        
+        <CardHeader className="pb-2 relative">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-safe animate-pulse" />
+              <Skeleton className="h-5 w-32" />
+            </div>
+            <Skeleton className="h-6 w-16 rounded-full" />
+          </div>
+        </CardHeader>
+        
+        <CardContent className="space-y-5 relative">
+          {/* Avoided Loss Skeleton */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-1.5">
+              <AlertTriangle className="w-3 h-3 text-muted-foreground" />
+              <Skeleton className="h-3 w-28" />
+            </div>
+            <div className="flex items-baseline gap-2">
+              <Skeleton className="h-10 w-32" />
+              <Skeleton className="h-4 w-20" />
+            </div>
+          </div>
+          
+          {/* Bar Chart Skeleton */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <BarChart3 className="w-4 h-4 text-muted-foreground" />
+              <Skeleton className="h-4 w-28" />
+            </div>
+            <div className="flex items-end gap-1.5 h-24">
+              {Array.from({ length: 12 }).map((_, index) => (
+                <div key={index} className="flex-1 flex flex-col items-center gap-1">
+                  <Skeleton 
+                    className="w-full rounded-t" 
+                    style={{ 
+                      height: `${30 + Math.random() * 50}%`,
+                      animationDelay: `${index * 50}ms`
+                    }}
+                  />
+                  <Skeleton className="h-2 w-4" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="glass-panel border-safe/30 animate-slide-up overflow-hidden">
