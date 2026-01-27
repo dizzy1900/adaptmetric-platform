@@ -55,6 +55,7 @@ export const Sidebar = ({
         
         <ResultsCard 
           visible={showResults}
+          isLoading={isSimulating}
           avoidedLoss={results.avoidedLoss}
           riskReduction={results.riskReduction}
           monthlyData={results.monthlyData}
