@@ -449,7 +449,7 @@ const Index = () => {
       <main className="flex-1 relative flex flex-col">
         <Button
           variant="outline"
-          className="absolute top-4 right-4 z-30 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white gap-2"
+          className="absolute top-4 left-4 z-30 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white gap-2"
           onClick={() => setIsSplitMode(!isSplitMode)}
         >
           {isSplitMode ? (
@@ -500,6 +500,7 @@ const Index = () => {
           onYearChange={setSelectedYear}
           isPlaying={isTimelinePlaying}
           onPlayToggle={() => setIsTimelinePlaying((prev) => !prev)}
+          isSplitMode={isSplitMode}
         />
       </main>
     </div>

@@ -8,6 +8,7 @@ interface TimelinePlayerProps {
   onYearChange: (year: number) => void;
   isPlaying: boolean;
   onPlayToggle: () => void;
+  isSplitMode?: boolean;
 }
 
 const MIN_YEAR = 2026;
@@ -19,6 +20,7 @@ export function TimelinePlayer({
   onYearChange,
   isPlaying,
   onPlayToggle,
+  isSplitMode = false,
 }: TimelinePlayerProps) {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -40,7 +42,13 @@ export function TimelinePlayer({
   const progress = ((selectedYear - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100;
 
   return (
-    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-lg">
+    <div
+      className={`fixed bottom-8 z-40 ${
+        isSplitMode
+          ? "left-[25%] -translate-x-1/2 w-[40%] max-w-md"
+          : "left-1/2 -translate-x-1/2 w-[90%] max-w-lg"
+      }`}
+    >
       <div className="bg-black/60 backdrop-blur-md rounded-lg border border-white/10 px-6 py-4 shadow-xl">
         <div className="flex items-center gap-4">
           <Button
