@@ -88,8 +88,8 @@ export const FloatingControlPanel = ({
   const CropIcon = selectedCrop?.icon || Wheat;
 
   return (
-    <GlassCard className="w-80 p-6">
-      <div className="flex items-center gap-3 mb-6">
+    <GlassCard className="w-80 p-4">
+      <div className="flex items-center gap-3 mb-4">
         <div className="relative">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center">
             <Activity className="w-5 h-5 text-white" />
@@ -107,7 +107,7 @@ export const FloatingControlPanel = ({
       <Tabs
         value={mode}
         onValueChange={(v) => onModeChange(v as DashboardMode)}
-        className="w-full mb-6"
+        className="w-full mb-4"
       >
         <TabsList className="w-full grid grid-cols-3 h-11 bg-white/5 border border-white/10 rounded-xl p-1">
           <TabsTrigger
@@ -131,7 +131,7 @@ export const FloatingControlPanel = ({
         </TabsList>
       </Tabs>
 
-      <div className="flex items-center gap-2 mb-6 px-1">
+      <div className="flex items-center gap-2 mb-4 px-1">
         <MapPin className={`w-4 h-4 ${hasCoordinates ? 'text-emerald-400' : 'text-white/40'}`} />
         {hasCoordinates ? (
           <div className="flex items-center gap-2 font-mono text-sm text-white/70">
@@ -144,7 +144,7 @@ export const FloatingControlPanel = ({
         )}
       </div>
 
-      <div className="space-y-5">
+      <div className="space-y-3">
         {mode === 'agriculture' && (
           <div className="space-y-3">
             <label className="text-sm font-medium text-white/70">Crop Type</label>
@@ -226,13 +226,13 @@ export const FloatingControlPanel = ({
         )}
 
         {mode === 'flood' && (
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 text-sm font-medium text-white/70">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-xs font-medium text-white/70">
               <Building2 className="w-4 h-4 text-blue-400" />
               <span>Sponge City Toolkit</span>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
               <Label className="text-xs text-white/50">Building Value ($)</Label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">
@@ -252,11 +252,11 @@ export const FloatingControlPanel = ({
               </div>
             </div>
 
-            <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 border border-white/10">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                  <Label htmlFor="green-roofs" className="text-sm text-white/80 cursor-pointer">
+                  <Label htmlFor="green-roofs" className="text-xs text-white/80 cursor-pointer">
                     Install Green Roofs
                   </Label>
                 </div>
@@ -268,12 +268,12 @@ export const FloatingControlPanel = ({
                 />
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 border border-white/10">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-blue-500" />
                   <Label
                     htmlFor="permeable-pavement"
-                    className="text-sm text-white/80 cursor-pointer"
+                    className="text-xs text-white/80 cursor-pointer"
                   >
                     Permeable Pavement
                   </Label>
@@ -287,7 +287,7 @@ export const FloatingControlPanel = ({
               </div>
             </div>
 
-            <p className="text-xs text-white/40">
+            <p className="text-[10px] text-white/40 leading-tight">
               Toggle interventions to simulate flood protection benefits
             </p>
           </div>

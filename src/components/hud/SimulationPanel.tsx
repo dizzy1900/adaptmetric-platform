@@ -71,17 +71,17 @@ export const SimulationPanel = ({
         : 'Simulate Flood Risk');
 
   return (
-    <GlassCard className="w-80 p-5">
-      <div className="space-y-5">
+    <GlassCard className="w-80 p-4">
+      <div className="space-y-4">
         <div className="flex items-center gap-2 text-sm font-medium text-white/70">
           <Thermometer className="w-4 h-4 text-amber-400" />
           <span>Simulation Parameters</span>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs text-white/50">Temperature Increase</span>
-            <span className="text-lg font-bold text-amber-400 tabular-nums">+{temperature.toFixed(1)}°C</span>
+            <span className="text-base font-bold text-amber-400 tabular-nums">+{temperature.toFixed(1)}°C</span>
           </div>
           <Slider
             value={[temperature]}
