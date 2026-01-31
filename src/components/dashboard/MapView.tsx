@@ -27,6 +27,7 @@ interface MapViewProps {
   viewState?: ViewState;
   onViewStateChange?: (viewState: ViewState) => void;
   scenarioLabel?: string;
+  isAdaptationScenario?: boolean;
 }
 
 const DEFAULT_VIEW_STATE: ViewState = {
@@ -45,6 +46,7 @@ const LazyMap = ({
   viewState: externalViewState,
   onViewStateChange,
   scenarioLabel,
+  isAdaptationScenario = false,
 }: MapViewProps) => {
   const [MapComponents, setMapComponents] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -139,8 +141,19 @@ const LazyMap = ({
           anchor="bottom"
         >
           <div className="relative animate-bounce">
-            <MapPin className="w-10 h-10 text-risk drop-shadow-lg" fill="hsl(24 100% 58%)" />
-            <div className="absolute inset-0 w-10 h-10 bg-risk/30 rounded-full blur-xl -z-10" />
+            <MapPin
+              className={`w-10 h-10 drop-shadow-lg ${
+                isAdaptationScenario
+                  ? "text-emerald-500"
+                  : "text-risk"
+              }`}
+              fill={isAdaptationScenario ? "hsl(142 76% 36%)" : "hsl(24 100% 58%)"}
+            />
+            <div className={`absolute inset-0 w-10 h-10 rounded-full blur-xl -z-10 ${
+              isAdaptationScenario
+                ? "bg-emerald-500/30"
+                : "bg-risk/30"
+            }`} />
           </div>
         </Marker>
       )}
@@ -174,6 +187,7 @@ export const MapView = ({
   viewState,
   onViewStateChange,
   scenarioLabel,
+  isAdaptationScenario = false,
 }: MapViewProps) => {
   return (
     <div className="relative w-full h-full">
@@ -185,6 +199,7 @@ export const MapView = ({
         viewState={viewState}
         onViewStateChange={onViewStateChange}
         scenarioLabel={scenarioLabel}
+        isAdaptationScenario={isAdaptationScenario}
       />
       
       {/* Map overlay gradient */}

@@ -486,6 +486,7 @@ const Index = () => {
                 viewState={viewState}
                 onViewStateChange={handleViewStateChange}
                 scenarioLabel="With Adaptation"
+                isAdaptationScenario={true}
               />
 
               <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 z-20 pointer-events-none">
