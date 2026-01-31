@@ -1,7 +1,6 @@
 import { useState, useCallback } from 'react';
 import { MapView, MapStyle, ViewState } from '@/components/dashboard/MapView';
 import { DashboardMode } from '@/components/dashboard/ModeSelector';
-import { TimelinePlayer } from '@/components/TimelinePlayer';
 import { FloatingControlPanel } from '@/components/hud/FloatingControlPanel';
 import { SimulationPanel } from '@/components/hud/SimulationPanel';
 import { ResultsPanel } from '@/components/hud/ResultsPanel';
@@ -379,6 +378,7 @@ const Index = () => {
           viewState={isSplitMode ? viewState : undefined}
           onViewStateChange={isSplitMode ? handleViewStateChange : undefined}
           scenarioLabel={isSplitMode ? 'Current Forecast' : undefined}
+          isSimulating={isCurrentlySimulating}
         />
 
         {isSplitMode && (
@@ -392,6 +392,7 @@ const Index = () => {
               onViewStateChange={handleViewStateChange}
               scenarioLabel="With Adaptation"
               isAdaptationScenario={true}
+              isSimulating={isCurrentlySimulating}
             />
 
             <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 z-20 pointer-events-none">
@@ -421,6 +422,11 @@ const Index = () => {
           permeablePavementEnabled={permeablePavementEnabled}
           onPermeablePavementChange={handlePermeablePavementChange}
           canSimulate={canSimulate}
+          selectedYear={selectedYear}
+          onYearChange={setSelectedYear}
+          isTimelinePlaying={isTimelinePlaying}
+          onPlayToggle={() => setIsTimelinePlaying((prev) => !prev)}
+          isSplitMode={isSplitMode}
         />
       </div>
 
@@ -471,14 +477,6 @@ const Index = () => {
           permeablePavementEnabled={permeablePavementEnabled}
         />
       </div>
-
-      <TimelinePlayer
-        selectedYear={selectedYear}
-        onYearChange={setSelectedYear}
-        isPlaying={isTimelinePlaying}
-        onPlayToggle={() => setIsTimelinePlaying((prev) => !prev)}
-        isSplitMode={isSplitMode}
-      />
     </div>
   );
 };

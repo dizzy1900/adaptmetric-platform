@@ -17,17 +17,17 @@ interface SimulationPanelProps {
 const modeConfig = {
   agriculture: {
     color: 'emerald',
-    buttonClass: 'bg-emerald-500 hover:bg-emerald-600',
+    buttonClass: 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600',
     glowClass: 'shadow-emerald-500/20',
   },
   coastal: {
     color: 'teal',
-    buttonClass: 'bg-teal-500 hover:bg-teal-600',
+    buttonClass: 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600',
     glowClass: 'shadow-teal-500/20',
   },
   flood: {
     color: 'blue',
-    buttonClass: 'bg-blue-500 hover:bg-blue-600',
+    buttonClass: 'bg-gradient-to-r from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600',
     glowClass: 'shadow-blue-500/20',
   },
 };
