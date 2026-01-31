@@ -45,30 +45,36 @@ export function TimelinePlayer({
     <div
       className={`fixed bottom-8 z-40 ${
         isSplitMode
-          ? "left-[25%] -translate-x-1/2 w-[40%] max-w-md"
+          ? "left-[25%] -translate-x-1/2 w-[42%] max-w-[280px]"
           : "left-1/2 -translate-x-1/2 w-[90%] max-w-lg"
       }`}
     >
-      <div className="bg-black/60 backdrop-blur-md rounded-lg border border-white/10 px-6 py-4 shadow-xl">
-        <div className="flex items-center gap-4">
+      <div className={`bg-black/60 backdrop-blur-md rounded-lg border border-white/10 shadow-xl ${
+        isSplitMode ? "px-3 py-2" : "px-6 py-4"
+      }`}>
+        <div className={`flex items-center ${isSplitMode ? "gap-2" : "gap-4"}`}>
           <Button
             variant="ghost"
             size="icon"
             onClick={onPlayToggle}
-            className="h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 text-white shrink-0"
+            className={`rounded-full bg-white/10 hover:bg-white/20 text-white shrink-0 ${
+              isSplitMode ? "h-7 w-7" : "h-10 w-10"
+            }`}
           >
             {isPlaying ? (
-              <Pause className="h-5 w-5" />
+              <Pause className={isSplitMode ? "h-3.5 w-3.5" : "h-5 w-5"} />
             ) : (
-              <Play className="h-5 w-5 ml-0.5" />
+              <Play className={`ml-0.5 ${isSplitMode ? "h-3.5 w-3.5" : "h-5 w-5"}`} />
             )}
           </Button>
 
-          <div className="text-white font-bold text-2xl tabular-nums w-16 text-center shrink-0">
+          <div className={`text-white font-bold tabular-nums text-center shrink-0 ${
+            isSplitMode ? "text-base w-12" : "text-2xl w-16"
+          }`}>
             {selectedYear}
           </div>
 
-          <div className="flex-1 flex flex-col gap-2">
+          <div className={`flex-1 flex flex-col ${isSplitMode ? "gap-1" : "gap-2"}`}>
             <Slider
               value={[selectedYear]}
               onValueChange={(value) => onYearChange(value[0])}
@@ -77,14 +83,14 @@ export function TimelinePlayer({
               step={1}
               className="w-full [&_[data-radix-slider-track]]:bg-white/20 [&_[data-radix-slider-range]]:bg-emerald-500 [&_[data-radix-slider-thumb]]:border-emerald-500 [&_[data-radix-slider-thumb]]:bg-white"
             />
-            <div className="flex justify-between text-xs text-white/60">
+            <div className={`flex justify-between text-white/60 ${isSplitMode ? "text-[10px]" : "text-xs"}`}>
               <span>{MIN_YEAR}</span>
               <span>{MAX_YEAR}</span>
             </div>
           </div>
         </div>
 
-        <div className="mt-3 h-1 bg-white/10 rounded-full overflow-hidden">
+        <div className={`bg-white/10 rounded-full overflow-hidden ${isSplitMode ? "mt-1.5 h-0.5" : "mt-3 h-1"}`}>
           <div
             className="h-full bg-emerald-500/50 transition-all duration-300"
             style={{ width: `${progress}%` }}
