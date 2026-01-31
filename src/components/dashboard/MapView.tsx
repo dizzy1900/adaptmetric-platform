@@ -1,6 +1,5 @@
 import { useCallback, useState, useEffect } from 'react';
-import { Map as MapIcon, CircleAlert as AlertCircle } from 'lucide-react';
-import { HexagonMarker } from './HexagonMarker';
+import { MapPin, Map as MapIcon, CircleAlert as AlertCircle } from 'lucide-react';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiZGF2aWRpemkiLCJhIjoiY21rd2dzeHN6MDFoYzNkcXYxOHZ0YXRuNCJ9.P_g5wstTHNzglNEQfHIoBg';
 
@@ -29,7 +28,6 @@ interface MapViewProps {
   onViewStateChange?: (viewState: ViewState) => void;
   scenarioLabel?: string;
   isAdaptationScenario?: boolean;
-  isSimulating?: boolean;
 }
 
 const DEFAULT_VIEW_STATE: ViewState = {
@@ -49,7 +47,6 @@ const LazyMap = ({
   onViewStateChange,
   scenarioLabel,
   isAdaptationScenario = false,
-  isSimulating = false,
 }: MapViewProps) => {
   const [MapComponents, setMapComponents] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -141,17 +138,21 @@ const LazyMap = ({
         <Marker
           longitude={markerPosition.lng}
           latitude={markerPosition.lat}
-          anchor="center"
+          anchor="bottom"
         >
-          <div className="relative">
-            <HexagonMarker
-              isSimulating={isSimulating}
-              isAdaptation={isAdaptationScenario}
+          <div className="relative animate-bounce">
+            <MapPin
+              className={`w-10 h-10 drop-shadow-lg ${
+                isAdaptationScenario
+                  ? "text-emerald-500"
+                  : "text-risk"
+              }`}
+              fill={isAdaptationScenario ? "hsl(142 76% 36%)" : "hsl(24 100% 58%)"}
             />
             <div className={`absolute inset-0 w-10 h-10 rounded-full blur-xl -z-10 ${
               isAdaptationScenario
-                ? "bg-emerald-500/40"
-                : "bg-orange-500/40"
+                ? "bg-emerald-500/30"
+                : "bg-risk/30"
             }`} />
           </div>
         </Marker>
@@ -187,7 +188,6 @@ export const MapView = ({
   onViewStateChange,
   scenarioLabel,
   isAdaptationScenario = false,
-  isSimulating = false,
 }: MapViewProps) => {
   return (
     <div className="relative w-full h-full">
@@ -200,7 +200,6 @@ export const MapView = ({
         onViewStateChange={onViewStateChange}
         scenarioLabel={scenarioLabel}
         isAdaptationScenario={isAdaptationScenario}
-        isSimulating={isSimulating}
       />
       
       {/* Map overlay gradient */}

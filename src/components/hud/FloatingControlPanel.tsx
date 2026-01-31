@@ -7,7 +7,6 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { DashboardMode } from '@/components/dashboard/ModeSelector';
-import { TimelinePlayer } from '@/components/TimelinePlayer';
 import { useState, useEffect, useRef } from 'react';
 
 interface FloatingControlPanelProps {
@@ -29,11 +28,6 @@ interface FloatingControlPanelProps {
   permeablePavementEnabled: boolean;
   onPermeablePavementChange: (enabled: boolean) => void;
   canSimulate: boolean;
-  selectedYear: number;
-  onYearChange: (year: number) => void;
-  isTimelinePlaying: boolean;
-  onPlayToggle: () => void;
-  isSplitMode: boolean;
 }
 
 const crops = [
@@ -60,11 +54,6 @@ export const FloatingControlPanel = ({
   permeablePavementEnabled,
   onPermeablePavementChange,
   canSimulate,
-  selectedYear,
-  onYearChange,
-  isTimelinePlaying,
-  onPlayToggle,
-  isSplitMode,
 }: FloatingControlPanelProps) => {
   const [localMangroveWidth, setLocalMangroveWidth] = useState(mangroveWidth);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -303,17 +292,6 @@ export const FloatingControlPanel = ({
             </p>
           </div>
         )}
-      </div>
-
-      <div className="mt-4 pt-4 border-t border-white/10">
-        <TimelinePlayer
-          selectedYear={selectedYear}
-          onYearChange={onYearChange}
-          isPlaying={isTimelinePlaying}
-          onPlayToggle={onPlayToggle}
-          isSplitMode={isSplitMode}
-          docked={true}
-        />
       </div>
     </GlassCard>
   );
