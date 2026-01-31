@@ -5,6 +5,14 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoiZGF2aWRpemkiLCJhIjoiY21rd2dzeHN6MDFoYzNkcXYxOHZ
 
 export type MapStyle = 'dark' | 'satellite' | 'flood';
 
+export interface ViewState {
+  longitude: number;
+  latitude: number;
+  zoom: number;
+  pitch: number;
+  bearing: number;
+}
+
 const MAP_STYLES: Record<MapStyle, string> = {
   dark: 'mapbox://styles/mapbox/dark-v11',
   satellite: 'mapbox://styles/mapbox/satellite-v9',
@@ -16,19 +24,33 @@ interface MapViewProps {
   markerPosition: { lat: number; lng: number } | null;
   mapStyle?: MapStyle;
   showFloodOverlay?: boolean;
+  viewState?: ViewState;
+  onViewStateChange?: (viewState: ViewState) => void;
+  scenarioLabel?: string;
 }
 
-// Lazy load the map to prevent SSR issues
-const LazyMap = ({ onLocationSelect, markerPosition, mapStyle = 'dark', showFloodOverlay = false }: MapViewProps) => {
+const DEFAULT_VIEW_STATE: ViewState = {
+  longitude: 37.9062,
+  latitude: -0.0236,
+  zoom: 5,
+  pitch: 0,
+  bearing: 0,
+};
+
+const LazyMap = ({
+  onLocationSelect,
+  markerPosition,
+  mapStyle = 'dark',
+  showFloodOverlay = false,
+  viewState: externalViewState,
+  onViewStateChange,
+  scenarioLabel,
+}: MapViewProps) => {
   const [MapComponents, setMapComponents] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const [viewState, setViewState] = useState({
-    longitude: 37.9062,
-    latitude: -0.0236,
-    zoom: 5,
-    pitch: 0,
-    bearing: 0,
-  });
+  const [internalViewState, setInternalViewState] = useState<ViewState>(DEFAULT_VIEW_STATE);
+
+  const viewState = externalViewState ?? internalViewState;
 
   useEffect(() => {
     const loadMap = async () => {
@@ -55,6 +77,15 @@ const LazyMap = ({ onLocationSelect, markerPosition, mapStyle = 'dark', showFloo
     const { lng, lat } = event.lngLat;
     onLocationSelect(lat, lng);
   }, [onLocationSelect]);
+
+  const handleMove = useCallback((evt: any) => {
+    const newViewState = evt.viewState as ViewState;
+    if (onViewStateChange) {
+      onViewStateChange(newViewState);
+    } else {
+      setInternalViewState(newViewState);
+    }
+  }, [onViewStateChange]);
 
   if (error) {
     return (
@@ -83,7 +114,7 @@ const LazyMap = ({ onLocationSelect, markerPosition, mapStyle = 'dark', showFloo
   return (
     <Map
       {...viewState}
-      onMove={(evt: any) => setViewState(evt.viewState)}
+      onMove={handleMove}
       onClick={handleClick}
       mapboxAccessToken={MAPBOX_TOKEN}
       mapStyle={MAP_STYLES[mapStyle]}
@@ -92,6 +123,14 @@ const LazyMap = ({ onLocationSelect, markerPosition, mapStyle = 'dark', showFloo
     >
       <NavigationControl position="top-right" showCompass={true} />
       <ScaleControl position="bottom-right" />
+
+      {scenarioLabel && (
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
+          <div className="bg-black/60 backdrop-blur-md text-white text-sm px-4 py-2 rounded-full border border-white/20">
+            {scenarioLabel}
+          </div>
+        </div>
+      )}
       
       {markerPosition && (
         <Marker
@@ -127,14 +166,25 @@ const LazyMap = ({ onLocationSelect, markerPosition, mapStyle = 'dark', showFloo
   );
 };
 
-export const MapView = ({ onLocationSelect, markerPosition, mapStyle = 'dark', showFloodOverlay = false }: MapViewProps) => {
+export const MapView = ({
+  onLocationSelect,
+  markerPosition,
+  mapStyle = 'dark',
+  showFloodOverlay = false,
+  viewState,
+  onViewStateChange,
+  scenarioLabel,
+}: MapViewProps) => {
   return (
     <div className="relative w-full h-full">
-      <LazyMap 
-        onLocationSelect={onLocationSelect} 
-        markerPosition={markerPosition} 
+      <LazyMap
+        onLocationSelect={onLocationSelect}
+        markerPosition={markerPosition}
         mapStyle={mapStyle}
         showFloodOverlay={showFloodOverlay}
+        viewState={viewState}
+        onViewStateChange={onViewStateChange}
+        scenarioLabel={scenarioLabel}
       />
       
       {/* Map overlay gradient */}

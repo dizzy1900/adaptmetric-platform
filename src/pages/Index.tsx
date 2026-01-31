@@ -1,10 +1,10 @@
 import { useState, useCallback } from "react";
 import { Sidebar } from "@/components/dashboard/Sidebar";
-import { MapView, MapStyle } from "@/components/dashboard/MapView";
+import { MapView, MapStyle, ViewState } from "@/components/dashboard/MapView";
 import { DashboardMode } from "@/components/dashboard/ModeSelector";
 import { TimelinePlayer } from "@/components/TimelinePlayer";
 import { toast } from "@/hooks/use-toast";
-import { Menu } from "lucide-react";
+import { Menu, Columns2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const mockMonthlyData = [
@@ -42,6 +42,14 @@ const Index = () => {
   const [showCoastalResults, setShowCoastalResults] = useState(false);
   const [showFloodResults, setShowFloodResults] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSplitMode, setIsSplitMode] = useState(false);
+  const [viewState, setViewState] = useState<ViewState>({
+    longitude: 37.9062,
+    latitude: -0.0236,
+    zoom: 5,
+    pitch: 0,
+    bearing: 0,
+  });
 
   const [selectedYear, setSelectedYear] = useState(2026);
   const [isTimelinePlaying, setIsTimelinePlaying] = useState(false);
@@ -372,6 +380,10 @@ const Index = () => {
     setIsTimelinePlaying(false);
   }, []);
 
+  const handleViewStateChange = useCallback((newViewState: ViewState) => {
+    setViewState(newViewState);
+  }, []);
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
       {/* Mobile Menu Button */}
@@ -434,13 +446,55 @@ const Index = () => {
         />
       </div>
 
-      <main className="flex-1 relative">
-        <MapView
-          onLocationSelect={handleLocationSelect}
-          markerPosition={markerPosition}
-          mapStyle={mapStyle}
-          showFloodOverlay={showFloodOverlay}
-        />
+      <main className="flex-1 relative flex flex-col">
+        <Button
+          variant="outline"
+          className="absolute top-4 right-4 z-30 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white gap-2"
+          onClick={() => setIsSplitMode(!isSplitMode)}
+        >
+          {isSplitMode ? (
+            <>
+              <X className="h-4 w-4" />
+              Exit Comparison
+            </>
+          ) : (
+            <>
+              <Columns2 className="h-4 w-4" />
+              Compare Scenarios
+            </>
+          )}
+        </Button>
+
+        <div className={`flex-1 relative ${isSplitMode ? "grid grid-cols-2" : ""}`}>
+          <MapView
+            onLocationSelect={handleLocationSelect}
+            markerPosition={markerPosition}
+            mapStyle={mapStyle}
+            showFloodOverlay={showFloodOverlay}
+            viewState={isSplitMode ? viewState : undefined}
+            onViewStateChange={isSplitMode ? handleViewStateChange : undefined}
+            scenarioLabel={isSplitMode ? "Current Forecast" : undefined}
+          />
+
+          {isSplitMode && (
+            <>
+              <MapView
+                onLocationSelect={handleLocationSelect}
+                markerPosition={markerPosition}
+                mapStyle={mapStyle}
+                showFloodOverlay={showFloodOverlay}
+                viewState={viewState}
+                onViewStateChange={handleViewStateChange}
+                scenarioLabel="With Adaptation"
+              />
+
+              <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 z-20 pointer-events-none">
+                <div className="w-px h-full bg-white/30 backdrop-blur-sm" />
+              </div>
+            </>
+          )}
+        </div>
+
         <TimelinePlayer
           selectedYear={selectedYear}
           onYearChange={setSelectedYear}
