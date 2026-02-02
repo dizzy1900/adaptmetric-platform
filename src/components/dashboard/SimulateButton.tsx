@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Zap, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { DashboardMode } from './ModeSelector';
-import { cn } from '@/lib/utils';
 
 interface SimulateButtonProps {
   onClick: () => void;
@@ -13,28 +11,24 @@ interface SimulateButtonProps {
 }
 
 const modeStyles: Record<DashboardMode, {
-  className: string;
-  defaultShadow: string;
-  hoverShadow: string;
-  activeShadow: string;
+  gradient: string;
+  hoverGradient: string;
+  glowColor: string;
 }> = {
   agriculture: {
-    className: 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600',
-    defaultShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.2), 0 0 20px 0 rgba(16,185,129,0.3)',
-    hoverShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.3), 0 0 30px 0 rgba(16,185,129,0.5)',
-    activeShadow: 'inset 0 2px 4px 0 rgba(0,0,0,0.3), 0 0 20px 0 rgba(16,185,129,0.3)',
+    gradient: 'linear-gradient(to right, #10b981, #14b8a6)',
+    hoverGradient: 'linear-gradient(to right, #059669, #0d9488)',
+    glowColor: '16, 185, 129',
   },
   coastal: {
-    className: 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600',
-    defaultShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.2), 0 0 20px 0 rgba(20,184,166,0.3)',
-    hoverShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.3), 0 0 30px 0 rgba(20,184,166,0.5)',
-    activeShadow: 'inset 0 2px 4px 0 rgba(0,0,0,0.3), 0 0 20px 0 rgba(20,184,166,0.3)',
+    gradient: 'linear-gradient(to right, #14b8a6, #06b6d4)',
+    hoverGradient: 'linear-gradient(to right, #0d9488, #0891b2)',
+    glowColor: '20, 184, 166',
   },
   flood: {
-    className: 'bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-600 hover:to-blue-500',
-    defaultShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.2), 0 0 20px 0 rgba(59,130,246,0.3)',
-    hoverShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.3), 0 0 30px 0 rgba(59,130,246,0.5)',
-    activeShadow: 'inset 0 2px 4px 0 rgba(0,0,0,0.3), 0 0 20px 0 rgba(59,130,246,0.3)',
+    gradient: 'linear-gradient(to right, #3b82f6, #60a5fa)',
+    hoverGradient: 'linear-gradient(to right, #2563eb, #3b82f6)',
+    glowColor: '59, 130, 246',
   },
 };
 
@@ -49,25 +43,32 @@ export const SimulateButton = ({
   const [isPressed, setIsPressed] = React.useState(false);
 
   const currentStyle = modeStyles[mode];
-  const currentShadow = isPressed ? currentStyle.activeShadow : (isHovered ? currentStyle.hoverShadow : currentStyle.defaultShadow);
+  const currentGradient = isHovered ? currentStyle.hoverGradient : currentStyle.gradient;
+  const glowIntensity = isPressed ? '0.3' : (isHovered ? '0.5' : '0.3');
+  const glowSize = isPressed ? '20px' : (isHovered ? '30px' : '20px');
+  const insetHighlight = isPressed ? 'none' : (isHovered ? 'inset 0 1px 0 0 rgba(255,255,255,0.3)' : 'inset 0 1px 0 0 rgba(255,255,255,0.2)');
+  const insetShadow = isPressed ? 'inset 0 2px 4px 0 rgba(0,0,0,0.3)' : 'none';
+  const scale = isPressed ? 0.98 : (isHovered ? 1.02 : 1);
+
+  const boxShadow = `${insetHighlight}${insetHighlight !== 'none' ? ', ' : ''}${insetShadow}${insetShadow !== 'none' ? ', ' : ''}0 0 ${glowSize} 0 rgba(${currentStyle.glowColor}, ${glowIntensity})`;
 
   return (
-    <Button
+    <button
       onClick={onClick}
       disabled={disabled || isLoading}
-      variant="ghost"
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => !disabled && setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
         setIsPressed(false);
       }}
-      onMouseDown={() => setIsPressed(true)}
+      onMouseDown={() => !disabled && setIsPressed(true)}
       onMouseUp={() => setIsPressed(false)}
-      style={{ boxShadow: currentShadow }}
-      className={cn(
-        "w-full h-12 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 hover:text-white",
-        currentStyle.className
-      )}
+      style={{
+        background: currentGradient,
+        boxShadow: boxShadow,
+        transform: `scale(${scale})`,
+      }}
+      className="w-full h-12 text-sm font-semibold text-white transition-all duration-300 rounded-md flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed border-0 outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
       {isLoading ? (
         <>
@@ -80,6 +81,6 @@ export const SimulateButton = ({
           {label}
         </>
       )}
-    </Button>
+    </button>
   );
 };
