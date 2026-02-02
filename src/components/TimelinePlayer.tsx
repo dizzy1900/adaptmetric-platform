@@ -61,17 +61,17 @@ export function TimelinePlayer({
 
   return (
     <div
-      className="fixed bottom-8 z-40 transition-all duration-300 ease-out left-1/2 -translate-x-1/2 w-[85%] max-w-lg"
+      className="fixed bottom-6 lg:bottom-8 z-40 transition-all duration-300 ease-out left-1/2 -translate-x-1/2 w-[95%] lg:w-[85%] max-w-lg"
     >
       <div
-        className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-2xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] px-5 py-2.5"
+        className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-xl lg:rounded-2xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] px-3 lg:px-5 py-2 lg:py-2.5"
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 lg:gap-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={onPlayToggle}
-            className={`rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-white shrink-0 border border-white/15 transition-all duration-300 hover:shadow-lg h-9 w-9 ${
+            className={`rounded-lg lg:rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-white shrink-0 border border-white/15 transition-all duration-300 hover:shadow-lg h-8 w-8 lg:h-9 lg:w-9 ${
               isPlaying
                 ? 'bg-emerald-500/25 border-emerald-400/40 hover:bg-emerald-500/30 shadow-emerald-500/20'
                 : 'hover:border-white/25'
@@ -80,11 +80,11 @@ export function TimelinePlayer({
             <div className="relative">
               {isPlaying ? (
                 <Pause
-                  className="h-4 w-4 transition-all duration-200 animate-in fade-in-0 zoom-in-50"
+                  className="h-3.5 w-3.5 lg:h-4 lg:w-4 transition-all duration-200 animate-in fade-in-0 zoom-in-50"
                 />
               ) : (
                 <Play
-                  className="ml-0.5 h-4 w-4 transition-all duration-200 animate-in fade-in-0 zoom-in-50"
+                  className="ml-0.5 h-3.5 w-3.5 lg:h-4 lg:w-4 transition-all duration-200 animate-in fade-in-0 zoom-in-50"
                 />
               )}
             </div>
@@ -94,10 +94,10 @@ export function TimelinePlayer({
             className="flex items-center gap-1 shrink-0"
           >
             <Calendar
-              className="text-emerald-400 shrink-0 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)] w-3 h-3"
+              className="text-emerald-400 shrink-0 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)] w-3 h-3 lg:w-3.5 lg:h-3.5"
             />
             <span
-              className="text-white/70 font-medium tabular-nums tracking-tight transition-all duration-200 text-xs"
+              className="text-white/70 font-medium tabular-nums tracking-tight transition-all duration-200 text-[11px] lg:text-xs"
             >
               {selectedYear}
             </span>
@@ -113,10 +113,10 @@ export function TimelinePlayer({
               className={`${sliderBaseClasses} ${sliderHeightClasses} ${sliderTrackClasses} ${sliderRangeClasses} ${sliderThumbClasses}`}
             />
             <div
-              className="flex justify-between items-center text-white/50 font-medium transition-colors duration-200 text-xs"
+              className="flex justify-between items-center text-white/50 font-medium transition-colors duration-200 text-[10px] lg:text-xs"
             >
               <span className="transition-colors duration-200 hover:text-white/70">{MIN_YEAR}</span>
-              <span className="text-white/35 transition-colors duration-200 hover:text-white/50">
+              <span className="text-white/35 transition-colors duration-200 hover:text-white/50 hidden sm:inline">
                 Climate Projection Timeline
               </span>
               <span className="transition-colors duration-200 hover:text-white/70">{MAX_YEAR}</span>
