@@ -71,17 +71,17 @@ export const SimulationPanel = ({
         : 'Simulate Flood Risk');
 
   return (
-    <GlassCard className="w-80 p-4">
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 text-sm font-medium text-white/70">
-          <Thermometer className="w-4 h-4 text-amber-400" />
+    <GlassCard className="w-full lg:w-80 p-3 lg:p-4">
+      <div className="space-y-3 lg:space-y-4">
+        <div className="flex items-center gap-2 text-xs lg:text-sm font-medium text-white/70">
+          <Thermometer className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-amber-400" />
           <span>Simulation Parameters</span>
         </div>
 
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-white/50">Temperature Increase</span>
-            <span className="text-base font-bold text-amber-400 tabular-nums">+{temperature.toFixed(1)}°C</span>
+            <span className="text-[10px] lg:text-xs text-white/50">Temperature Increase</span>
+            <span className="text-sm lg:text-base font-bold text-amber-400 tabular-nums">+{temperature.toFixed(1)}°C</span>
           </div>
           <Slider
             value={[temperature]}
@@ -91,7 +91,7 @@ export const SimulationPanel = ({
             step={0.1}
             className="w-full [&_[data-radix-slider-track]]:bg-white/10 [&_[data-radix-slider-range]]:bg-gradient-to-r [&_[data-radix-slider-range]]:from-emerald-500 [&_[data-radix-slider-range]]:via-amber-500 [&_[data-radix-slider-range]]:to-red-500 [&_[data-radix-slider-thumb]]:border-white/50 [&_[data-radix-slider-thumb]]:bg-white"
           />
-          <div className="flex justify-between text-xs text-white/40">
+          <div className="flex justify-between text-[10px] lg:text-xs text-white/40">
             <span>0°C</span>
             <span>+1.5°C</span>
             <span>+3°C</span>
@@ -100,8 +100,8 @@ export const SimulationPanel = ({
 
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-white/50">Resilience Score</span>
-            <span className={cn('text-sm font-semibold tabular-nums', getScoreTextColor())}>
+            <span className="text-[10px] lg:text-xs text-white/50">Resilience Score</span>
+            <span className={cn('text-xs lg:text-sm font-semibold tabular-nums', getScoreTextColor())}>
               {Math.round(resilienceScore)}%
             </span>
           </div>
@@ -117,7 +117,7 @@ export const SimulationPanel = ({
           onClick={onSimulate}
           disabled={!canSimulate || isSimulating}
           className={cn(
-            'w-full h-12 text-sm font-semibold text-white transition-all duration-300 rounded-xl shadow-lg',
+            'w-full h-11 lg:h-12 text-xs lg:text-sm font-semibold text-white transition-all duration-300 rounded-xl shadow-lg active:scale-95',
             config.buttonClass,
             config.glowClass,
             'disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-xl'
@@ -137,7 +137,7 @@ export const SimulationPanel = ({
         </Button>
 
         {!canSimulate && (
-          <p className="text-xs text-white/40 text-center">Select a location on the map first</p>
+          <p className="text-[10px] lg:text-xs text-white/40 text-center">Select a location on the map first</p>
         )}
       </div>
     </GlassCard>

@@ -5,6 +5,7 @@ import { TimelinePlayer } from '@/components/TimelinePlayer';
 import { FloatingControlPanel } from '@/components/hud/FloatingControlPanel';
 import { SimulationPanel } from '@/components/hud/SimulationPanel';
 import { ResultsPanel } from '@/components/hud/ResultsPanel';
+import { MobileMenu } from '@/components/hud/MobileMenu';
 import { toast } from '@/hooks/use-toast';
 import { Columns2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -370,7 +371,7 @@ const Index = () => {
     <div className="relative h-screen w-full overflow-hidden bg-slate-950">
       <div className="absolute inset-0 hex-grid-pattern pointer-events-none z-10" />
 
-      <div className={`absolute inset-0 ${isSplitMode ? 'grid grid-cols-2' : ''}`}>
+      <div className={`absolute inset-0 ${isSplitMode ? 'grid lg:grid-cols-2 grid-rows-2 lg:grid-rows-1' : ''}`}>
         <MapView
           onLocationSelect={handleLocationSelect}
           markerPosition={markerPosition}
@@ -394,14 +395,14 @@ const Index = () => {
               isAdaptationScenario={true}
             />
 
-            <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 z-20 pointer-events-none">
-              <div className="w-px h-full bg-white/20 backdrop-blur-sm" />
+            <div className="absolute lg:left-1/2 lg:top-0 lg:bottom-0 lg:-translate-x-1/2 top-1/2 left-0 right-0 -translate-y-1/2 lg:translate-y-0 z-20 pointer-events-none">
+              <div className="lg:w-px lg:h-full h-px w-full bg-white/20 backdrop-blur-sm" />
             </div>
           </>
         )}
       </div>
 
-      <div className="absolute top-16 left-6 z-30 flex flex-col gap-4">
+      <div className="hidden lg:block absolute top-16 left-6 z-30">
         <FloatingControlPanel
           mode={mode}
           onModeChange={handleModeChange}
@@ -424,7 +425,7 @@ const Index = () => {
         />
       </div>
 
-      <div className="absolute bottom-24 left-6 z-30">
+      <div className="hidden lg:block absolute bottom-24 left-6 z-30">
         <SimulationPanel
           mode={mode}
           onSimulate={getCurrentSimulateHandler()}
@@ -433,26 +434,51 @@ const Index = () => {
         />
       </div>
 
-      <div className={`absolute top-6 z-40 ${isSplitMode ? 'right-16' : 'right-20'}`}>
+      <MobileMenu
+        mode={mode}
+        onModeChange={handleModeChange}
+        latitude={markerPosition?.lat ?? null}
+        longitude={markerPosition?.lng ?? null}
+        cropType={cropType}
+        onCropChange={setCropType}
+        mangroveWidth={mangroveWidth}
+        onMangroveWidthChange={handleMangroveWidthChange}
+        onMangroveWidthChangeEnd={handleMangroveWidthChangeEnd}
+        propertyValue={propertyValue}
+        onPropertyValueChange={setPropertyValue}
+        buildingValue={buildingValue}
+        onBuildingValueChange={setBuildingValue}
+        greenRoofsEnabled={greenRoofsEnabled}
+        onGreenRoofsChange={handleGreenRoofsChange}
+        permeablePavementEnabled={permeablePavementEnabled}
+        onPermeablePavementChange={handlePermeablePavementChange}
+        canSimulate={canSimulate}
+        onSimulate={getCurrentSimulateHandler()}
+        isSimulating={isCurrentlySimulating}
+      />
+
+      <div className={`absolute top-4 right-4 lg:top-6 z-40 ${isSplitMode ? 'lg:right-16' : 'lg:right-20'}`}>
         <Button
-          className="bg-black/30 backdrop-blur-xl border border-white/10 hover:bg-white/10 text-white gap-2 rounded-xl px-4 py-2 h-auto shadow-lg"
+          className="bg-black/30 backdrop-blur-xl border border-white/10 hover:bg-white/10 text-white gap-2 rounded-xl px-3 py-2 lg:px-4 h-auto shadow-lg text-xs lg:text-sm"
           onClick={() => setIsSplitMode(!isSplitMode)}
         >
           {isSplitMode ? (
             <>
               <X className="h-4 w-4" />
-              Exit Comparison
+              <span className="hidden sm:inline">Exit Comparison</span>
+              <span className="sm:hidden">Exit</span>
             </>
           ) : (
             <>
               <Columns2 className="h-4 w-4" />
-              Compare Scenarios
+              <span className="hidden sm:inline">Compare Scenarios</span>
+              <span className="sm:hidden">Compare</span>
             </>
           )}
         </Button>
       </div>
 
-      <div className="absolute bottom-24 right-6 z-30">
+      <div className="absolute bottom-20 lg:bottom-24 right-4 lg:right-6 left-4 lg:left-auto z-30">
         <ResultsPanel
           mode={mode}
           visible={showCurrentResults}

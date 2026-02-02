@@ -88,7 +88,7 @@ export const FloatingControlPanel = ({
   const CropIcon = selectedCrop?.icon || Wheat;
 
   return (
-    <GlassCard className="w-80 p-4">
+    <GlassCard className="w-full lg:w-80 p-3 lg:p-4">
       <div className="flex items-center gap-3 mb-4">
         <div className="relative">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500 flex items-center justify-center">
@@ -109,22 +109,22 @@ export const FloatingControlPanel = ({
         onValueChange={(v) => onModeChange(v as DashboardMode)}
         className="w-full mb-4"
       >
-        <TabsList className="w-full grid grid-cols-3 h-11 bg-white/5 border border-white/10 rounded-xl p-1">
+        <TabsList className="w-full grid grid-cols-3 h-10 lg:h-11 bg-white/5 border border-white/10 rounded-xl p-1">
           <TabsTrigger
             value="agriculture"
-            className="rounded-lg text-xs font-medium data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400 data-[state=active]:border data-[state=active]:border-emerald-500/30 text-white/60 transition-all"
+            className="rounded-lg text-[10px] lg:text-xs font-medium data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400 data-[state=active]:border data-[state=active]:border-emerald-500/30 text-white/60 transition-all"
           >
             Agriculture
           </TabsTrigger>
           <TabsTrigger
             value="coastal"
-            className="rounded-lg text-xs font-medium data-[state=active]:bg-teal-500/20 data-[state=active]:text-teal-400 data-[state=active]:border data-[state=active]:border-teal-500/30 text-white/60 transition-all"
+            className="rounded-lg text-[10px] lg:text-xs font-medium data-[state=active]:bg-teal-500/20 data-[state=active]:text-teal-400 data-[state=active]:border data-[state=active]:border-teal-500/30 text-white/60 transition-all"
           >
             Coastal
           </TabsTrigger>
           <TabsTrigger
             value="flood"
-            className="rounded-lg text-xs font-medium data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400 data-[state=active]:border data-[state=active]:border-blue-500/30 text-white/60 transition-all"
+            className="rounded-lg text-[10px] lg:text-xs font-medium data-[state=active]:bg-blue-500/20 data-[state=active]:text-blue-400 data-[state=active]:border data-[state=active]:border-blue-500/30 text-white/60 transition-all"
           >
             Flood Risk
           </TabsTrigger>
