@@ -61,17 +61,17 @@ export function TimelinePlayer({
 
   return (
     <div
-      className="fixed bottom-6 z-40 transition-all duration-300 ease-out left-1/2 -translate-x-1/2 w-[90%] max-w-xl"
+      className="fixed bottom-8 z-40 transition-all duration-300 ease-out left-1/2 -translate-x-1/2 w-[85%] max-w-lg"
     >
       <div
-        className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-2xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] px-6 py-3.5"
+        className="bg-gradient-to-br from-black/50 to-black/30 backdrop-blur-xl rounded-2xl border border-white/15 shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] transition-all duration-300 hover:shadow-[0_12px_48px_0_rgba(0,0,0,0.5)] px-5 py-2.5"
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={onPlayToggle}
-            className={`rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-white shrink-0 border border-white/15 transition-all duration-300 hover:shadow-lg h-10 w-10 ${
+            className={`rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-white shrink-0 border border-white/15 transition-all duration-300 hover:shadow-lg h-9 w-9 ${
               isPlaying
                 ? 'bg-emerald-500/25 border-emerald-400/40 hover:bg-emerald-500/30 shadow-emerald-500/20'
                 : 'hover:border-white/25'
@@ -80,24 +80,24 @@ export function TimelinePlayer({
             <div className="relative">
               {isPlaying ? (
                 <Pause
-                  className="h-4.5 w-4.5 transition-all duration-200 animate-in fade-in-0 zoom-in-50"
+                  className="h-4 w-4 transition-all duration-200 animate-in fade-in-0 zoom-in-50"
                 />
               ) : (
                 <Play
-                  className="ml-0.5 h-4.5 w-4.5 transition-all duration-200 animate-in fade-in-0 zoom-in-50"
+                  className="ml-0.5 h-4 w-4 transition-all duration-200 animate-in fade-in-0 zoom-in-50"
                 />
               )}
             </div>
           </Button>
 
           <div
-            className="flex items-center gap-1.5 shrink-0"
+            className="flex items-center gap-1 shrink-0"
           >
             <Calendar
-              className="text-emerald-400 shrink-0 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)] w-3.5 h-3.5"
+              className="text-emerald-400 shrink-0 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)] w-3 h-3"
             />
             <span
-              className="text-white/70 font-medium tabular-nums tracking-tight transition-all duration-200 text-sm"
+              className="text-white/70 font-medium tabular-nums tracking-tight transition-all duration-200 text-xs"
             >
               {selectedYear}
             </span>

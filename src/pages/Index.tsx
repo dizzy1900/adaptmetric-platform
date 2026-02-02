@@ -401,7 +401,7 @@ const Index = () => {
         )}
       </div>
 
-      <div className="absolute top-6 left-6 z-30 flex flex-col gap-4">
+      <div className="absolute top-16 left-6 z-30 flex flex-col gap-4">
         <FloatingControlPanel
           mode={mode}
           onModeChange={handleModeChange}
@@ -433,7 +433,7 @@ const Index = () => {
         />
       </div>
 
-      <div className="absolute top-6 right-6 z-40">
+      <div className="absolute top-6 right-20 z-40">
         <Button
           className="bg-black/30 backdrop-blur-xl border border-white/10 hover:bg-white/10 text-white gap-2 rounded-xl px-4 py-2 h-auto shadow-lg"
           onClick={() => setIsSplitMode(!isSplitMode)}
